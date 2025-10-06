@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi alma gemela 💖 - ¡Feliz 2do Mes, Enrique!</title>
+    <style>
+        /* --- ESTILOS BASE Y FONDO ROMÁNTICO --- */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif; 
+            color: #1a237e; /* Azul Oscuro Profundo */
+            background-color: #e3f2fd; /* Azul Cielo Muy Claro */
+            overflow-x: hidden;
+            position: relative;
+            overflow-y: scroll; 
+        }
+
+        /* --- EFECTO DE ESTRELLITAS DE FONDO --- */
+        .star-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255,255,0,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            animation: twinkle 10s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { background-size: 15px 15px; opacity: 0.9; }
+            to { background-size: 25px 25px; opacity: 1; }
+        }
+
+        /* --- ANIMACIÓN DE PARTÍCULAS DE ESTRELLA (AL HACER CLIC) --- */
+        .star-particle {
+            position: absolute;
+            font-size: 1.5em;
+            color: #ffeb3b;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+            animation: shootStar 1s ease-out forwards;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        @keyframes shootStar {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+        }
+
+
+        /* --- ESTILOS DE LA PÁGINA (LIBRO) --- */
+        .page {
+            display: block;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        /* --- ESTILOS DE PORTADA --- */
+        #page0 {
+            background-color: #bbdefb; /* Celeste un poco más oscuro */
+            text-align: center;
+        }
+        .cover-title {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 3.5rem; 
+            color: #0d47a1; /* Azul marino */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+        .cover-subtitle {
+            font-size: 1.6rem;
+            color: #42a5f5; /* Azul brillante */
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto 30px;
+        }
+        .collage img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* --- ESTILOS DE CONTENIDO DE PÁGINA --- */
+        .page-content {
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 450px; 
+            width: 90%;
+            box-shadow: 0 8px 25px rgba(13, 71, 161, 0.3); /* Sombra azul */
+            text-align: center;
+            position: relative;
+        }
+
+        .photo {
+            width: 100%;
+            height: 280px; 
+            object-fit: cover;
+            object-position: center;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border: 4px solid #90caf9; /* Borde celeste */
+        }
+
+        .phrase {
+            font-size: 1.2rem; 
+            font-style: italic;
+            color: #311b92;
+            margin: 20px 0;
+            line-height: 1.4;
+        }
+        
+        .song-title {
+            font-weight: bold;
+            color: #03a9f4; /* Azul brillante */
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .artist-name {
+            font-size: 0.9em;
+            color: #7986cb;
+            margin-bottom: 10px;
+        }
+
+        .music {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 380px;
+        }
+        
+        iframe {
+            border-radius: 10px;
+            width: 100%;
+            height: 200px; /* Alto para que los controles sean visibles */
+            border: none;
+        }
+        
+        /* BOTÓN PARA DESBLOQUEAR AUDIO */
+        #btn-audio-permission {
+            background-color: #0d47a1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        #btn-audio-permission:hover {
+            background-color: #1565c0;
+            transform: scale(1.05);
+        }
+
+        /* --- BOTÓN DE NAVEGACIÓN (ESTRELLA) --- */
+        .btn-next {
+            margin-top: 30px;
+            font-size: 3.5rem; 
+            color: #ffeb3b; /* Estrella Dorada */
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            animation: pulse-star 1.5s infinite;
+            padding: 10px;
+        }
+
+        @keyframes pulse-star {
+            0%, 100% {transform: scale(1);}
+            50% {transform: scale(1.1);}
+        }
+
+        /* --- ESTILOS DE LA PÁGINA FINAL (SORPRESA) --- */
+        #page9 .page-content {
+             background: linear-gradient(145deg, #42a5f5, #90caf9); /* Degradado Azul */
+             border: 5px solid #0d47a1;
+             padding: 30px;
+             position: relative;
+             overflow: hidden;
+        }
+        .final-message {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1a237e;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 2;
+        }
+        .final-message strong {
+            display: block;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-top: 15px;
+            color: #ff5252; /* Corazón rojo en el final */
+        }
+    </style>
+</head>
+<body>
+    <div class="star-background"></div>
+
+    <div class="page" id="page0">
+        <div class="cover-title">✨ ¡Feliz 2do Mes de Aniversario! ✨</div>
+        <div class="cover-subtitle">Este libro es solo para ti, mi **Enrique** 💖</div>
+        
+        <button id="btn-audio-permission" onclick="startAudioPermission();">
+            ▶️ Activar Música (Clic Aquí)
+        </button>
+
+        <div class="collage">
+            <img class="cover-img" src="https://i.pinimg.com/736x/54/4a/c8/544ac8642e7322648fa63350b104bd82.jpg" alt="Collage 1">
+            <img class="cover-img" src="https://i.pinimg.com/736x/a7/9e/c5/a79ec5c35c524a64c9ebc08615e38654.jpg" alt="Collage 2">
+            <img class="cover-img" src="https://i.pinimg.com/736x/93/43/09/934309a9ea776000c6e0b8649233d87f.jpg" alt="Collage 3">
+            <img class="cover-img" src="https://i.pinimg.com/736x/d5/d2/85/d5d28527ce9df0f5b14cecb4d4a7ea33.jpg" alt="Collage 4">
+            <img class="cover-img" src="https://i.pinimg.com/1200x/79/c9/24/79c9248514e83cf668eaa0fb4b9349dc.jpg" alt="Collage 5">
+            <img class="cover-img" src="https://i.pinimg.com/736x/bd/15/c9/bd15c9c71fb2c1d9acc0f60d3866917a.jpg" alt="Collage 6">
+        </div>
+        
+        <a class="btn-next" href="#page1" onclick="createStarParticles(event);">⭐</a> 
+    </div>
+
+    <div class="page" id="page1">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/54/4a/c8/544ac8642e7322648fa63350b104bd82.jpg" alt="Foto 1">
+            <div class="phrase">"Eres mi lugar favorito para quedarme."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 Dandelions</p>
+                <p class="artist-name">Ruth B.</p>
+            </div>
+            <div class="music">
+                <iframe id="video1" data-src="loduYZcFRtE" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page2" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page2">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/a7/9e/c5/a79ec5c35c524a64c9ebc08615e38654.jpg" alt="Foto 2">
+            <div class="phrase">"No necesito mucho para ser feliz, solo a ti."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 I Found</p>
+                <p class="artist-name">Amber Run</p>
+            </div>
+            <div class="music">
+                <iframe id="video2" data-src="FL7ktlvZnH8" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page3" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page3">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/93/43/09/934309a9ea776000c6e0b8649233d87f.jpg" alt="Foto 3">
+            <div class="phrase">"Desde que llegaste, todo tiene más sentido."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 Golden Hour</p>
+                <p class="artist-name">Kacey Musgraves</p>
+            </div>
+            <div class="music">
+                <iframe id="video3" data-src="RZEukjCYEQw" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page4" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page4">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/d5/d2/85/d5d28527ce9df0f5b14cecb4d4a7ea33.jpg" alt="Foto 4">
+            <div class="phrase">"Tú no eres mi número uno, eres el único."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 Say You Won't Let Go</p>
+                <p class="artist-name">James Arthur</p>
+            </div>
+            <div class="music">
+                <iframe id="video4" data-src="aMJ11RLOoFU" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page5" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page5">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/1200x/79/c9/24/79c9248514e83cf668eaa0fb4b9349dc.jpg" alt="Foto 5">
+            <div class="phrase">"Tu sonrisa es mi amanecer favorito."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 Perfect</p>
+                <p class="artist-name">Ed Sheeran</p>
+            </div>
+            <div class="music">
+                <iframe id="video5" data-src="n4cFH3EmOLk" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page6" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page6">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/bd/15/c9/bd15c9c71fb2c1d9acc0f60d3866917a.jpg" alt="Foto 6">
+            <div class="phrase">"Amarte es mi forma favorita de perder la noción del tiempo."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 All of Me</p>
+                <p class="artist-name">John Legend</p>
+            </div>
+            <div class="music">
+                <iframe id="video6" data-src="WDxhZXLW8AY" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page7" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page7">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/c2/26/91/c226911561f7714a8ebd502b548bd2f8.jpg" alt="Foto 7">
+            <div class="phrase">"Tu nombre suena a hogar cuando lo digo en voz baja."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 La Primera Vez</p>
+                <p class="artist-name">Café Tacvba</p>
+            </div>
+            <div class="music">
+                <iframe id="video7" data-src="KmOVNVZEP9o" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page8" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page8">
+        <div class="page-content">
+            <img class="photo" src="http://i.pinimg.com/736x/e8/c9/c4/e8c9c4374848eaf1fa51ceae34827bf4.jpg" alt="Foto 8">
+            <div class="phrase">"Si el amor tuviera un rostro, sería el tuyo."</div>
+            <div class="song-info">
+                <p class="song-title">🎶 Siempre Te Amaré</p>
+                <p class="artist-name">Música Lofi / Chill Instrumental</p>
+            </div>
+            <div class="music">
+                <iframe id="video8" data-src="b5_H521wE1U" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a class="btn-next" href="#page9" onclick="createStarParticles(event);">⭐</a>
+    </div>
+
+    <div class="page" id="page9">
+        <div class="page-content">
+            <img class="photo" src="https://i.pinimg.com/736x/13/d5/5d/13d55d28539c1f473bb8cfe2e486250b.jpg" alt="Foto Final">
+            <div class="final-message">
+                "Eres mi poema favorito escrito por el universo. Tú y yo: una historia que el tiempo no se atreverá a borrar."
+                <br><br>
+                "Gracias por este mes tan especial, **Enrique**.
+                <strong>¡Te amo con todo mi corazón ❤️!</strong>"
+            </div>
+        </div>
+        <a class="btn-next" href="#page0">↩️ Volver a Empezar</a>
+    </div>
+
+    <script>
+        let audioPermissionGranted = false;
+        
+        // Función para construir la URL de YouTube Embed
+        function getYouTubeEmbedUrl(videoId, autoplay = 0) {
+            // Utilizamos 'enablejsapi=1' y un host para que el JS pueda controlar la reproducción.
+            const base = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&loop=1&playlist=${videoId}&controls=1&mute=0&enablejsapi=1`;
+            return base;
+        }
+        
+        // --- FUNCIONES DE EFECTOS DE ESTRELLA (PARTÍCULAS) ---
+        function createStarParticles(event) {
+            const buttonRect = event.currentTarget.getBoundingClientRect();
+            const centerX = buttonRect.left + buttonRect.width / 2;
+            const centerY = buttonRect.top + buttonRect.height / 2;
+            
+            const numStars = 8;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('span');
+                star.classList.add('star-particle');
+                star.textContent = '✨';
+                document.body.appendChild(star);
+
+                star.style.left = `${centerX}px`;
+                star.style.top = `${centerY}px`;
+
+                // Distancia y ángulo aleatorios para la dispersión
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 150 + 50; 
+                const randX = Math.cos(angle) * distance + 'px';
+                const randY = Math.sin(angle) * distance + 'px';
+
+                star.style.setProperty('--dx', randX);
+                star.style.setProperty('--dy', randY);
+
+                star.addEventListener('animationend', () => {
+                    star.remove();
+                });
+            }
+        }
+
+        // --- LÓGICA DE AUDIO MEJORADA ---
+        
+        // Inicia la primera canción y concede el permiso de audio
+        function startAudioPermission() {
+            if (audioPermissionGranted) return;
+            audioPermissionGranted = true;
+            document.getElementById('btn-audio-permission').style.display = 'none';
+
+            // Carga y reproduce el video de la página 1
+            const video1Iframe = document.getElementById('video1');
+            if (video1Iframe) {
+                const videoId = video1Iframe.getAttribute('data-src');
+                video1Iframe.src = getYouTubeEmbedUrl(videoId, 1);
+            }
+        }
+
+        /**
+         * Detiene la reproducción del video en el elemento de página dado.
+         */
+        function stopCurrentVideo(pageElement) {
+            const iframe = pageElement ? pageElement.querySelector('iframe') : null;
+            if (iframe) { 
+                const videoId = iframe.getAttribute('data-src');
+                if (videoId) {
+                    // Carga la URL SIN autoplay para forzar la pausa/detención
+                    iframe.src = getYouTubeEmbedUrl(videoId, 0); 
+                }
+            }
+        }
+
+        /**
+         * Intenta reproducir el video de la página de destino si el permiso está concedido.
+         */
+        function playNextVideo(pageElement) {
+            // No hacemos nada en portada o página final
+            if (pageElement.id === 'page0' || pageElement.id === 'page9') return;
+
+            // Si el permiso no ha sido dado, no reproducimos
+            if (!audioPermissionGranted) return; 
+
+            const iframe = pageElement.querySelector('iframe');
+            if (iframe) {
+                const videoId = iframe.getAttribute('data-src');
+                if (videoId) {
+                    // Carga y reproduce con autoplay=1
+                    iframe.src = getYouTubeEmbedUrl(videoId, 1); 
+                }
+            }
+        }
+
+        // --- Lógica de Inicialización y Navegación ---
+        
+        function handleHashChange() {
+            const allPages = document.querySelectorAll('.page');
+            let currentPageElement = null;
+            // Obtiene el ID de la página o 'page0' por defecto
+            const targetHash = window.location.hash.substring(1) || 'page0';
+
+            // 1. Detener todos los videos
+            allPages.forEach(page => {
+                stopCurrentVideo(page); 
+                if (page.id === targetHash) {
+                    currentPageElement = page;
+                }
+            });
+
+            // 2. Mover el scroll a la nueva página
+            if (currentPageElement) {
+                 currentPageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // 3. Reproducir el video de la página de destino (con un pequeño delay)
+            if (currentPageElement && audioPermissionGranted) {
+                setTimeout(() => { 
+                    playNextVideo(currentPageElement);
+                }, 100); 
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Agregamos el listener para manejar la navegación
+            window.addEventListener('hashchange', handleHashChange);
+            
+            // Ejecución inicial: Muestra la portada
+            handleHashChange();
+        });
+    </script>
+</body>
+</html>
